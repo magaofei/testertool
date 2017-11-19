@@ -1,5 +1,6 @@
 package hello;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,8 +13,7 @@ import java.io.PrintWriter;
         name = "HelloServlet",
         urlPatterns = {
                 "/greeting",
-                "/salutation",
-                "/wazzup"
+                "/"
         },
         loadOnStartup = 1
 )
@@ -25,28 +25,31 @@ public class HelloServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String user = request.getParameter("user");
-        if (user == null)
-            user = HelloServlet.DEFAULT_USER;
+//        String user = request.getParameter("user");
+//        if (user == null)
+//            user = HelloServlet.DEFAULT_USER;
+//
+//        response.setContentType("text/html");
+//        response.setCharacterEncoding("UTF-8");
 
-        response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
+        RequestDispatcher view = request.getRequestDispatcher("hello.html");
+        view.forward(request, response);
 
-        PrintWriter writer = response.getWriter();
-        writer.append("<!DOCTYPE html>\r\n")
-                .append("<html>\r\n")
-                .append("    <head>\r\n")
-                .append("        <title>Hello User Application</title>\r\n")
-                .append("    <head>\r\n")
-                .append("    <body>\r\n")
-                .append("        Hello, ").append(user).append("!<br/></br>\r\n")
-                .append("        <form action=\"greeting\" method=\"POST\">\r\n")
-                .append("             Enter your name:<br/>\r\n")
-                .append("             <input type=\"text\" name=\"user\"/><br/>\r\n")
-                .append("             <input type=\"submit\" value=\"Submit\"/><br/>\r\n")
-                .append("        </form>\r\n")
-                .append("    </body>\r\n")
-                .append("</html>\r\n");
+//        PrintWriter writer = response.getWriter();
+//        writer.append("<!DOCTYPE html>\r\n")
+//                .append("<html>\r\n")
+//                .append("    <head>\r\n")
+//                .append("        <title>Hello User Application</title>\r\n")
+//                .append("    <head>\r\n")
+//                .append("    <body>\r\n")
+//                .append("        Hello, ").append(user).append("!<br/></br>\r\n")
+//                .append("        <form action=\"greeting\" method=\"POST\">\r\n")
+//                .append("             Enter your name:<br/>\r\n")
+//                .append("             <input type=\"text\" name=\"user\"/><br/>\r\n")
+//                .append("             <input type=\"submit\" value=\"Submit\"/><br/>\r\n")
+//                .append("        </form>\r\n")
+//                .append("    </body>\r\n")
+//                .append("</html>\r\n");
 
 
 
