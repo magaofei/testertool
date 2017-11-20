@@ -21,11 +21,11 @@ import org.apache.jmeter.threads.gui.ThreadGroupGui;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.HashTree;
 
-
-
-
-
-
+/**
+ * 产生JMX文件
+ * 需要传入数据
+ * 需要设置 JMeter 路径
+ */
 
 public class JMXCreator {
     public static void main(String[] argv) throws Exception {
