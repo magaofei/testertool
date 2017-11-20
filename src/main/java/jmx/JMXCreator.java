@@ -23,8 +23,10 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.HashTree;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 /**
  * 产生JMX文件
@@ -37,9 +39,16 @@ public class JMXCreator {
             String name, String domain, int port, String method, String path, int loops)
             throws IOException {
 
+        File file = new File("production.properties");
+        FileInputStream fileInput = new FileInputStream(file);
+        Properties properties = new Properties();
+        properties.load(fileInput);
+        fileInput.close();
+        
+
         // Initialize the configuration variables
-        String savePath = "/Users/apple/Downloads/";
-        String jmeterHome = "/Users/apple/Documents/apache-jmeter-3.3";
+        String savePath = properties.getProperty("savePath");
+        String jmeterHome = properties.getProperty("jmeterHome");
 
 //        String name = "baidu";
 //        String domain = "www.baidu.com";
