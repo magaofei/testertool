@@ -1,6 +1,8 @@
 package jmx;
 
-import java.io.FileOutputStream;
+//import java.io.File;
+//import java.io.FileOutputStream;
+
 
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.config.gui.ArgumentsPanel;
@@ -21,6 +23,10 @@ import org.apache.jmeter.threads.gui.ThreadGroupGui;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.HashTree;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 /**
  * 产生JMX文件
  * 需要传入数据
@@ -28,13 +34,16 @@ import org.apache.jorphan.collections.HashTree;
  */
 
 public class JMXCreator {
-    public static void main(String[] argv) throws Exception {
+    public static boolean createJmxFile (
+            String name, String domain, int port, String method, String path, int loops)
+            throws IOException {
+        
         // Initialize the configuration variables
         String savePath = "/Users/mark/Downloads/";
         String jmeterHome = "/Users/mark/Documents/apache-jmeter-3.3";
 
-        String name = "baidu";
-        String domain = "www.baidu.com";
+//        String name = "baidu";
+//        String domain = "www.baidu.com";
 
         JMeterUtils.setJMeterHome(jmeterHome);
         JMeterUtils.loadJMeterProperties(JMeterUtils.getJMeterBinDir()
@@ -48,9 +57,9 @@ public class JMXCreator {
         HTTPSamplerProxy examplecomSampler = new HTTPSamplerProxy();
 
         examplecomSampler.setDomain(domain);
-        examplecomSampler.setPort(80);
-        examplecomSampler.setPath("/");
-        examplecomSampler.setMethod("GET");
+        examplecomSampler.setPort(port);
+        examplecomSampler.setPath(path);
+        examplecomSampler.setMethod(method);
         examplecomSampler.setName(name);
         examplecomSampler.setProperty(TestElement.TEST_CLASS, HTTPSamplerProxy.class.getName());
         examplecomSampler.setProperty(TestElement.GUI_CLASS, HttpTestSampleGui.class.getName());
@@ -58,7 +67,7 @@ public class JMXCreator {
 
         // Loop Controller
         LoopController loopController = new LoopController();
-        loopController.setLoops(1);
+        loopController.setLoops(loops);
         loopController.setFirst(true);
         loopController.setProperty(TestElement.TEST_CLASS, LoopController.class.getName());
         loopController.setProperty(TestElement.GUI_CLASS, LoopControlPanel.class.getName());
@@ -91,8 +100,15 @@ public class JMXCreator {
         // 添加时间戳
         long currentTime = System.currentTimeMillis();
         String saveFileName = name + "-" + domain + "-" + currentTime + ".jmx";
+
+        String fullFilePath = savePath + saveFileName;
         // Save to jmx file
         SaveService.saveTree(testPlanTree, new FileOutputStream(
-                savePath + saveFileName));
+                fullFilePath));
+
+        // 判断如果文件存在就返回成功
+        File file = new File(fullFilePath);
+        return file.exists();
+
     }
 }
