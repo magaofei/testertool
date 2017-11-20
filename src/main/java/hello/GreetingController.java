@@ -24,6 +24,7 @@ public class GreetingController {
     public String greetingForm(Model model) {
         model.addAttribute("greeting", new Greeting());
         // greeting html
+        System.out.println(model);
         return "greeting";
     }
 

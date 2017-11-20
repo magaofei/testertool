@@ -37,7 +37,7 @@ public class JMXCreator {
     public static boolean createJmxFile (
             String name, String domain, int port, String method, String path, int loops)
             throws IOException {
-        
+
         // Initialize the configuration variables
         String savePath = "/Users/mark/Downloads/";
         String jmeterHome = "/Users/mark/Documents/apache-jmeter-3.3";
