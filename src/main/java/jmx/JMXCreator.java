@@ -33,13 +33,13 @@ import java.io.IOException;
  */
 
 public class JMXCreator {
-    public static boolean createJmxFile (
+    public static String createJmxFile (
             String name, String domain, int port, String method, String path, int loops)
             throws IOException {
 
         // Initialize the configuration variables
-        String savePath = "/Users/mark/Downloads/";
-        String jmeterHome = "/Users/mark/Documents/apache-jmeter-3.3";
+        String savePath = "/Users/apple/Downloads/";
+        String jmeterHome = "/Users/apple/Documents/apache-jmeter-3.3";
 
 //        String name = "baidu";
 //        String domain = "www.baidu.com";
@@ -104,10 +104,11 @@ public class JMXCreator {
         // Save to jmx file
         SaveService.saveTree(testPlanTree, new FileOutputStream(
                 fullFilePath));
+        return fullFilePath;
 
         // 判断如果文件存在就返回成功
-        File file = new File(fullFilePath);
-        return file.exists();
+//        File file = new File(fullFilePath);
+//        return file.exists();
 
     }
 }

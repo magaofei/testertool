@@ -1,6 +1,7 @@
 package hello;
 
-import com.sun.net.httpserver.Headers;
+
+import jmx.JMXCreator;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,7 +25,7 @@ public class GreetingController {
     public String greetingForm(Model model) {
         model.addAttribute("greeting", new Greeting());
         // greeting html
-        System.out.println(model);
+
         return "greeting";
     }
 
@@ -37,18 +38,29 @@ public class GreetingController {
 //    }
 
     @RequestMapping(path = "/download", method = RequestMethod.POST)
-    public ResponseEntity<Resource> download(String param) throws IOException {
+    public ResponseEntity<Resource> download(@ModelAttribute Greeting greeting) throws IOException {
 
         // ...
+        System.out.println(greeting);
 
-        String fileName = "redis.conf";
-        String filePath = "/Users/mark/Downloads/";
+        String fullFilePath = JMXCreator.createJmxFile(
+                greeting.getName(),
+                greeting.getDomain(),
+                greeting.getPort(),
+                greeting.getMethod(),
+                greeting.getPath(),
+                greeting.getLoops()
+        );
 
-        File file = new File(filePath + fileName);
+//        String fileName = "redis.conf";
+//        String filePath = "/Users/mark/Downloads/";
+
+        File file = new File(fullFilePath);
+        String[] fileName = fullFilePath.split("/");
 
         // 设置下载名
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentDispositionFormData("attachment", fileName);
+        headers.setContentDispositionFormData("attachment", fileName[fileName.length-1]);
 
 
         Path path = Paths.get(file.getAbsolutePath());
