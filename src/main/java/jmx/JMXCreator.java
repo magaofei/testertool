@@ -12,8 +12,7 @@ import org.apache.jmeter.control.gui.TestPlanGui;
 import org.apache.jmeter.protocol.http.control.gui.HttpTestSampleGui;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampler;
 import org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy;
-import org.apache.jmeter.protocol.java.control.gui.JavaTestSamplerGui;
-import org.apache.jmeter.protocol.java.sampler.JavaSampler;
+
 
 import org.apache.jmeter.save.SaveService;
 import org.apache.jmeter.testelement.TestElement;
