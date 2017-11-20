@@ -4,7 +4,11 @@
 # Log file
 *.log
 
-target/*
+.classpath
+.project
+.settings/
+target/
+out/
 
 # BlueJ files
 *.ctxt

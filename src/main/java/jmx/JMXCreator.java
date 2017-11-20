@@ -44,7 +44,7 @@ public class JMXCreator {
         Properties properties = new Properties();
         properties.load(fileInput);
         fileInput.close();
-        
+
 
         // Initialize the configuration variables
         String savePath = properties.getProperty("savePath");
