@@ -1,5 +1,6 @@
 # Compiled class file
 *.class
+*/*.class
 
 # Log file
 *.log
@@ -9,6 +10,8 @@
 .settings/
 target/
 out/
+
+.DS_Store
 
 # BlueJ files
 *.ctxt

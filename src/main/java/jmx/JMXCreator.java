@@ -4,13 +4,13 @@ package jmx;
 //import java.io.FileOutputStream;
 
 
+import hello.Modal.JmxHttpSampler;
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.config.gui.ArgumentsPanel;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;
 import org.apache.jmeter.control.gui.TestPlanGui;
 import org.apache.jmeter.protocol.http.control.gui.HttpTestSampleGui;
-import org.apache.jmeter.protocol.http.sampler.HTTPSampler;
 import org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy;
 
 
@@ -22,11 +22,8 @@ import org.apache.jmeter.threads.gui.ThreadGroupGui;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.HashTree;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Properties;
 
 /**
  * 产生JMX文件
@@ -35,8 +32,7 @@ import java.util.Properties;
  */
 
 public class JMXCreator {
-    public static String createJmxFile (
-            String name, String domain, int port, String method, String path, int loops)
+    public static String createJmxFile (JmxHttpSampler jmxHttpSampler)
             throws IOException {
 
 //        File file = new File("production.properties");
@@ -45,6 +41,12 @@ public class JMXCreator {
 //        properties.load(fileInput);
 //        fileInput.close();
 
+        String domain = jmxHttpSampler.getDomain();
+        int port = jmxHttpSampler.getPort();
+        String path = jmxHttpSampler.getPath();
+        String method = jmxHttpSampler.getMethod();
+        String name = jmxHttpSampler.getName();
+        int loops = jmxHttpSampler.getLoops();
 
         // Initialize the configuration variables
 //        String savePath = properties.getProperty("savePath");

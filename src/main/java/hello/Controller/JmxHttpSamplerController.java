@@ -1,6 +1,7 @@
-package hello;
+package hello.Controller;
 
 
+import hello.Modal.JmxHttpSampler;
 import jmx.JMXCreator;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -19,16 +20,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Controller
-public class GreetingController {
+public class JmxHttpSamplerController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String greetingForm(Model model) {
-        model.addAttribute("greeting", new Greeting());
+        model.addAttribute("greeting", new JmxHttpSampler());
         return "greeting";
     }
 
 //    @PostMapping("/greeting")
-//    public void greetingSubmit(@ModelAttribute Greeting greeting) {
+//    public void greetingSubmit(@ModelAttribute JmxHttpSampler greeting) {
 ////        return "result";
 ////        return "/download";
 //
@@ -36,18 +37,13 @@ public class GreetingController {
 //    }
 
     @RequestMapping(path = "/download", method = RequestMethod.POST)
-    public ResponseEntity<Resource> download(@ModelAttribute Greeting greeting) throws IOException {
+    public ResponseEntity<Resource> download(@ModelAttribute JmxHttpSampler jmxHttpSampler) throws IOException {
 
         // ...
-        System.out.println(greeting);
+
 
         String fullFilePath = JMXCreator.createJmxFile(
-                greeting.getName(),
-                greeting.getDomain(),
-                greeting.getPort(),
-                greeting.getMethod(),
-                greeting.getPath(),
-                greeting.getLoops()
+                jmxHttpSampler
         );
 
 //        String fileName = "redis.conf";
