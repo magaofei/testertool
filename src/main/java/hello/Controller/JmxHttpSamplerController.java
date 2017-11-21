@@ -1,8 +1,10 @@
 package hello.Controller;
 
 
-import hello.Modal.JmxHttpSampler;
+//import hello.Modal.JmxHttpSampler;
 import jmx.JMXCreator;
+import org.apache.jmeter.control.LoopController;
+import org.apache.jmeter.protocol.http.sampler.HTTPSampler;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +26,9 @@ public class JmxHttpSamplerController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String greetingForm(Model model) {
-        model.addAttribute("greeting", new JmxHttpSampler());
+        model.addAttribute("HTTPSampler", new HTTPSampler());
+        model.addAttribute("LoopController", new LoopController());
+
         return "greeting";
     }
 
@@ -37,13 +41,16 @@ public class JmxHttpSamplerController {
 //    }
 
     @RequestMapping(path = "/download", method = RequestMethod.POST)
-    public ResponseEntity<Resource> download(@ModelAttribute JmxHttpSampler jmxHttpSampler) throws IOException {
+    public ResponseEntity<Resource> download(
+            @ModelAttribute HTTPSampler httpSampler, @ModelAttribute LoopController loopController)
+            throws IOException {
 
         // ...
 
 
         String fullFilePath = JMXCreator.createJmxFile(
-                jmxHttpSampler
+                httpSampler,
+                loopController
         );
 
 //        String fileName = "redis.conf";

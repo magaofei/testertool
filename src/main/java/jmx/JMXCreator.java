@@ -4,13 +4,14 @@ package jmx;
 //import java.io.FileOutputStream;
 
 
-import hello.Modal.JmxHttpSampler;
+//import hello.Modal.JmxHttpSampler;
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.config.gui.ArgumentsPanel;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;
 import org.apache.jmeter.control.gui.TestPlanGui;
 import org.apache.jmeter.protocol.http.control.gui.HttpTestSampleGui;
+import org.apache.jmeter.protocol.http.sampler.HTTPSampler;
 import org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy;
 
 
@@ -32,7 +33,7 @@ import java.io.IOException;
  */
 
 public class JMXCreator {
-    public static String createJmxFile (JmxHttpSampler jmxHttpSampler)
+    public static String createJmxFile (HTTPSampler httpSampler, LoopController loopController)
             throws IOException {
 
 //        File file = new File("production.properties");
@@ -41,18 +42,20 @@ public class JMXCreator {
 //        properties.load(fileInput);
 //        fileInput.close();
 
-        String domain = jmxHttpSampler.getDomain();
-        int port = jmxHttpSampler.getPort();
-        String path = jmxHttpSampler.getPath();
-        String method = jmxHttpSampler.getMethod();
-        String name = jmxHttpSampler.getName();
-        int loops = jmxHttpSampler.getLoops();
+//        String domain = httpSampler.getDomain();
+//        int port = httpSampler.getPort();
+//        String path = httpSampler.getPath();
+//        String method = httpSampler.getMethod();
+//        String name = httpSampler.getName();
+//        int loops = myloopController.getLoops();
 
         // Initialize the configuration variables
 //        String savePath = properties.getProperty("savePath");
 //        String jmeterHome = properties.getProperty("jmeterHome");
-        String savePath = "/home/ubuntu/Downloads/";
-        String jmeterHome = "/home/ubuntu/apache-jmeter-3.3";
+        String savePath = "/Users/apple/Downloads/";
+        String jmeterHome = "/Users/apple/Documents/apache-jmeter-3.3";
+//        String savePath = "/home/ubuntu/Downloads/";
+//        String jmeterHome = "/home/ubuntu/apache-jmeter-3.3";
 
         JMeterUtils.setJMeterHome(jmeterHome);
         JMeterUtils.loadJMeterProperties(JMeterUtils.getJMeterBinDir()
@@ -63,23 +66,26 @@ public class JMXCreator {
         HashTree testPlanTree = new HashTree();
 
         // First HTTP Sampler - open uttesh.com
-        HTTPSamplerProxy examplecomSampler = new HTTPSamplerProxy();
-
-        examplecomSampler.setDomain(domain);
-        examplecomSampler.setPort(port);
-        examplecomSampler.setPath(path);
-        examplecomSampler.setMethod(method);
-        examplecomSampler.setName(name);
-        examplecomSampler.setProperty(TestElement.TEST_CLASS, HTTPSamplerProxy.class.getName());
-        examplecomSampler.setProperty(TestElement.GUI_CLASS, HttpTestSampleGui.class.getName());
-
+//        HTTPSamplerProxy examplecomSampler = new HTTPSamplerProxy();
+//
+//        examplecomSampler.setDomain(domain);
+//        examplecomSampler.setPort(port);
+//        examplecomSampler.setPath(path);
+//        examplecomSampler.setMethod(method);
+//        examplecomSampler.setName(name);
+//        examplecomSampler.setProperty(TestElement.TEST_CLASS, HTTPSamplerProxy.class.getName());
+//        examplecomSampler.setProperty(TestElement.GUI_CLASS, HttpTestSampleGui.class.getName());
+        httpSampler.setProperty(TestElement.TEST_CLASS, HTTPSampler.class.getName());
+        httpSampler.setProperty(TestElement.GUI_CLASS, HttpTestSampleGui.class.getName());
 
         // Loop Controller
-        LoopController loopController = new LoopController();
-        loopController.setLoops(loops);
-        loopController.setFirst(true);
+//        LoopController loopController = new LoopController();
+//        loopController.setLoops(loops);
+//        loopController.setFirst(true);
         loopController.setProperty(TestElement.TEST_CLASS, LoopController.class.getName());
         loopController.setProperty(TestElement.GUI_CLASS, LoopControlPanel.class.getName());
+//        loopController.initialize();
+
         loopController.initialize();
 
         // Thread Group
@@ -101,13 +107,15 @@ public class JMXCreator {
         // Construct Test Plan from previously initialized elements
         testPlanTree.add(testPlan);
         HashTree threadGroupHashTree = testPlanTree.add(testPlan, threadGroup);
-        threadGroupHashTree.add(examplecomSampler);
+        threadGroupHashTree.add(httpSampler);
 
         // save generated test plan to JMeter's .jmx file format
 //        SaveService.saveTree(testPlanTree, new FileOutputStream("report\\jmeter_api_sample.jmx"));
 
         // 添加时间戳
         long currentTime = System.currentTimeMillis();
+        String name = httpSampler.getName();
+        String domain = httpSampler.getDomain();
         String saveFileName = name + "-" + domain + "-" + currentTime + ".jmx";
 
         String fullFilePath = savePath + saveFileName;
