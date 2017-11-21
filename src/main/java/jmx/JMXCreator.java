@@ -39,19 +39,18 @@ public class JMXCreator {
             String name, String domain, int port, String method, String path, int loops)
             throws IOException {
 
-        File file = new File("production.properties");
-        FileInputStream fileInput = new FileInputStream(file);
-        Properties properties = new Properties();
-        properties.load(fileInput);
-        fileInput.close();
+//        File file = new File("production.properties");
+//        FileInputStream fileInput = new FileInputStream(file);
+//        Properties properties = new Properties();
+//        properties.load(fileInput);
+//        fileInput.close();
 
 
         // Initialize the configuration variables
-        String savePath = properties.getProperty("savePath");
-        String jmeterHome = properties.getProperty("jmeterHome");
-
-//        String name = "baidu";
-//        String domain = "www.baidu.com";
+//        String savePath = properties.getProperty("savePath");
+//        String jmeterHome = properties.getProperty("jmeterHome");
+        String savePath = "/home/ubuntu/Downloads/";
+        String jmeterHome = "/home/ubuntu/apache-jmeter-3.3";
 
         JMeterUtils.setJMeterHome(jmeterHome);
         JMeterUtils.loadJMeterProperties(JMeterUtils.getJMeterBinDir()
