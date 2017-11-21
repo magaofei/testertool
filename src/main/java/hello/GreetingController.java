@@ -21,11 +21,9 @@ import java.nio.file.Paths;
 @Controller
 public class GreetingController {
 
-    @GetMapping("/greeting")
+    @RequestMapping(path = "/", method = RequestMethod.GET)
     public String greetingForm(Model model) {
         model.addAttribute("greeting", new Greeting());
-        // greeting html
-
         return "greeting";
     }
 
