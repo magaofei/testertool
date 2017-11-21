@@ -5,6 +5,7 @@ package hello.Controller;
 import jmx.JMXCreator;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampler;
+import org.apache.jmeter.threads.ThreadGroup;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +29,7 @@ public class JmxHttpSamplerController {
     public String greetingForm(Model model) {
         model.addAttribute("HTTPSampler", new HTTPSampler());
         model.addAttribute("LoopController", new LoopController());
+        model.addAttribute("ThreadGroup", new ThreadGroup());
 
         return "greeting";
     }
@@ -42,7 +44,8 @@ public class JmxHttpSamplerController {
 
     @RequestMapping(path = "/download", method = RequestMethod.POST)
     public ResponseEntity<Resource> download(
-            @ModelAttribute HTTPSampler httpSampler, @ModelAttribute LoopController loopController)
+            @ModelAttribute HTTPSampler httpSampler, @ModelAttribute LoopController loopController,
+            @ModelAttribute ThreadGroup threadGroup)
             throws IOException {
 
         // ...
@@ -50,7 +53,8 @@ public class JmxHttpSamplerController {
 
         String fullFilePath = JMXCreator.createJmxFile(
                 httpSampler,
-                loopController
+                loopController,
+                threadGroup
         );
 
 //        String fileName = "redis.conf";

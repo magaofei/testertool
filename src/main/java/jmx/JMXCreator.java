@@ -33,7 +33,8 @@ import java.io.IOException;
  */
 
 public class JMXCreator {
-    public static String createJmxFile (HTTPSampler httpSampler, LoopController loopController)
+    public static String createJmxFile (
+            HTTPSampler httpSampler, LoopController loopController, ThreadGroup threadGroup)
             throws IOException {
 
 //        File file = new File("production.properties");
@@ -41,13 +42,6 @@ public class JMXCreator {
 //        Properties properties = new Properties();
 //        properties.load(fileInput);
 //        fileInput.close();
-
-//        String domain = httpSampler.getDomain();
-//        int port = httpSampler.getPort();
-//        String path = httpSampler.getPath();
-//        String method = httpSampler.getMethod();
-//        String name = httpSampler.getName();
-//        int loops = myloopController.getLoops();
 
         // Initialize the configuration variables
 //        String savePath = properties.getProperty("savePath");
@@ -65,34 +59,15 @@ public class JMXCreator {
 
         HashTree testPlanTree = new HashTree();
 
-        // First HTTP Sampler - open uttesh.com
-//        HTTPSamplerProxy examplecomSampler = new HTTPSamplerProxy();
-//
-//        examplecomSampler.setDomain(domain);
-//        examplecomSampler.setPort(port);
-//        examplecomSampler.setPath(path);
-//        examplecomSampler.setMethod(method);
-//        examplecomSampler.setName(name);
-//        examplecomSampler.setProperty(TestElement.TEST_CLASS, HTTPSamplerProxy.class.getName());
-//        examplecomSampler.setProperty(TestElement.GUI_CLASS, HttpTestSampleGui.class.getName());
         httpSampler.setProperty(TestElement.TEST_CLASS, HTTPSampler.class.getName());
         httpSampler.setProperty(TestElement.GUI_CLASS, HttpTestSampleGui.class.getName());
 
-        // Loop Controller
-//        LoopController loopController = new LoopController();
-//        loopController.setLoops(loops);
-//        loopController.setFirst(true);
         loopController.setProperty(TestElement.TEST_CLASS, LoopController.class.getName());
         loopController.setProperty(TestElement.GUI_CLASS, LoopControlPanel.class.getName());
-//        loopController.initialize();
 
         loopController.initialize();
 
         // Thread Group
-        ThreadGroup threadGroup = new ThreadGroup();
-        threadGroup.setName("Sample Thread Group");
-        threadGroup.setNumThreads(1);
-        threadGroup.setRampUp(1);
         threadGroup.setSamplerController(loopController);
         threadGroup.setProperty(TestElement.TEST_CLASS, ThreadGroup.class.getName());
         threadGroup.setProperty(TestElement.GUI_CLASS, ThreadGroupGui.class.getName());
