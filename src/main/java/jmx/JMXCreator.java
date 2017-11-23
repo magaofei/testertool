@@ -46,10 +46,10 @@ public class JMXCreator {
         // Initialize the configuration variables
 //        String savePath = properties.getProperty("savePath");
 //        String jmeterHome = properties.getProperty("jmeterHome");
-        String savePath = "/Users/apple/Downloads/";
-        String jmeterHome = "/Users/apple/Documents/apache-jmeter-3.3";
-//        String savePath = "/home/ubuntu/Downloads/";
-//        String jmeterHome = "/home/ubuntu/apache-jmeter-3.3";
+//        String savePath = "/Users/apple/Downloads/";
+//        String jmeterHome = "/Users/apple/Documents/apache-jmeter-3.3";
+        String savePath = "/data/Downloads/";
+        String jmeterHome = "/data/apache-jmeter-3.3";
 
         JMeterUtils.setJMeterHome(jmeterHome);
         JMeterUtils.loadJMeterProperties(JMeterUtils.getJMeterBinDir()
