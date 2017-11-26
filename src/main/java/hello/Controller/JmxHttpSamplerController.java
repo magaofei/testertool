@@ -62,6 +62,7 @@ public class JmxHttpSamplerController {
 
         File file = new File(fullFilePath);
         String[] fileName = fullFilePath.split("/");
+        
 
         // 设置下载名
         HttpHeaders headers = new HttpHeaders();
@@ -70,7 +71,7 @@ public class JmxHttpSamplerController {
 
         Path path = Paths.get(file.getAbsolutePath());
         ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-
+                
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentLength(file.length())

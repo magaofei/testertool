@@ -10,11 +10,14 @@ import org.apache.jmeter.config.gui.ArgumentsPanel;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;
 import org.apache.jmeter.control.gui.TestPlanGui;
+import org.apache.jmeter.engine.JMeterEngine;
+import org.apache.jmeter.engine.JMeterEngineException;
 import org.apache.jmeter.protocol.http.control.gui.HttpTestSampleGui;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampler;
 import org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy;
 
 
+import org.apache.jmeter.protocol.http.util.HTTPArgument;
 import org.apache.jmeter.save.SaveService;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.TestPlan;
@@ -25,6 +28,7 @@ import org.apache.jorphan.collections.HashTree;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 /**
  * 产生JMX文件
@@ -61,6 +65,14 @@ public class JMXCreator {
 
         httpSampler.setProperty(TestElement.TEST_CLASS, HTTPSampler.class.getName());
         httpSampler.setProperty(TestElement.GUI_CLASS, HttpTestSampleGui.class.getName());
+        // 根据不同的接口划分不同
+//        HTTPArgument httpArgument = new HTTPArgument();
+//        httpArgument.setName("Foo");
+//        httpArgument.setValue("");
+//        httpArgument.setAlwaysEncoded(false);
+//        httpArgument.setUseEquals(true);
+//        httpArgument.setMetaData("=<");
+
 
         loopController.setProperty(TestElement.TEST_CLASS, LoopController.class.getName());
         loopController.setProperty(TestElement.GUI_CLASS, LoopControlPanel.class.getName());
