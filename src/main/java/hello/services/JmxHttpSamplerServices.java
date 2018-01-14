@@ -2,6 +2,7 @@ package hello.services;
 
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampler;
+import org.apache.jmeter.protocol.http.util.HTTPArgument;
 import org.apache.jmeter.threads.ThreadGroup;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -19,12 +20,13 @@ public class JmxHttpSamplerServices {
 
 
     static public ResponseEntity<Resource> getJmxFile(HTTPSampler httpSampler, LoopController loopController,
-                                                      ThreadGroup threadGroup)  throws IOException{
+                                                      ThreadGroup threadGroup, HTTPArgument httpArgument)  throws IOException{
 
         String fullFilePath = JMXCreator.createJmxFile(
                 httpSampler,
                 loopController,
-                threadGroup
+                threadGroup,
+                httpArgument
         );
 
 //        String fileName = "redis.conf";

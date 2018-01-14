@@ -5,6 +5,7 @@ package hello.services;
 
 
 //import hello.Modal.JmxHttpSampler;
+
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.config.gui.ArgumentsPanel;
 import org.apache.jmeter.control.LoopController;
@@ -12,6 +13,7 @@ import org.apache.jmeter.control.gui.LoopControlPanel;
 import org.apache.jmeter.control.gui.TestPlanGui;
 import org.apache.jmeter.protocol.http.control.gui.HttpTestSampleGui;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampler;
+import org.apache.jmeter.protocol.http.util.HTTPArgument;
 import org.apache.jmeter.save.SaveService;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.TestPlan;
@@ -38,7 +40,8 @@ public class JMXCreator {
 
 
     public static String createJmxFile (
-            HTTPSampler httpSampler, LoopController loopController, ThreadGroup threadGroup)
+            HTTPSampler httpSampler, LoopController loopController, ThreadGroup threadGroup,
+            HTTPArgument httpArgument)
             throws IOException {
 
 //        File file = new File("production.properties");
@@ -65,6 +68,13 @@ public class JMXCreator {
 
         httpSampler.setProperty(TestElement.TEST_CLASS, HTTPSampler.class.getName());
         httpSampler.setProperty(TestElement.GUI_CLASS, HttpTestSampleGui.class.getName());
+//        HTTPArgument httpArgument = new HTTPArgument();
+
+        Arguments arguments = new Arguments();
+
+
+        arguments.addArgument(httpArgument);
+        httpSampler.setArguments(arguments);
 
         loopController.setProperty(TestElement.TEST_CLASS, LoopController.class.getName());
         loopController.setProperty(TestElement.GUI_CLASS, LoopControlPanel.class.getName());
