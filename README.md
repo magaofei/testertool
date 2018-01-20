@@ -8,13 +8,18 @@
 sudo yum install java-1.8.0-openjdk.x86_64
 sudo yum install nginx
 sudo yum install maven
+sudo yum install git
 
+sudo mkdir /data
+cd /data
+git clone https://github.com/magaofei/testertool.git
 
 ```
 
 #### Configuration
 
 ```shell
+
 # /etc/systemd/system/testertool.service
 # testertool.service
 [Unit]
