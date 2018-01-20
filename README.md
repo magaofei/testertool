@@ -41,7 +41,7 @@ WantedBy=multi-user.target
    server {
         listen       80 default_server;
         listen       [::]:80 default_server;
-        server_name  testertool.com www.testertool.com;
+        server_name  yourservername.com;
         root         /data/testertool;
 
         # Load configuration files for the default server block.
