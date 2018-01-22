@@ -25,7 +25,7 @@ public class JmxHttpSamplerController {
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String index(Model model) {
 
-        return "greeting";
+        return "index";
     }
 
 //    @PostMapping("/greeting")
