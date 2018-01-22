@@ -3,7 +3,7 @@
 <head>
     <title>测试工具-JMX文件生成</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
 
 </head>
 <style>
@@ -16,7 +16,7 @@
 String name, String domain, int port, String method, String path, int loops)
 
 -->
-<div class="form">
+<div id="app" class="form">
     <h2>JMeter-JMX</h2>
     <form action="/download"  method="post">
         <div class="form-group">
@@ -30,12 +30,17 @@ String name, String domain, int port, String method, String path, int loops)
 
         <div class="form-group">
             <label for="domian">域名</label>
-            <input id="domian" type="text" name="domain" placeholder="无需输入 http:// 前缀" />
+            <input id="domian" type="text" name="domain" placeholder="eg. httpbin.org" />
         </div>
 
         <div class="form-group">
             <label>路径</label>
             <input type="text" name="path" value="/" />
+        </div>
+
+        <div class="form-group">
+            <label>参数</label>
+            <input type="textarea" row="3" cols="3" name="value" placeholder="foo=bar&foo2=bar2" value="" />
         </div>
 
         <div class="form-group">
@@ -46,8 +51,8 @@ String name, String domain, int port, String method, String path, int loops)
         <div class="form-group">
             <label for="method">方法</label>
             <select id="method" name="method">
-                <option value="GET">GET</option>
                 <option value="POST">POST</option>
+                <option value="GET">GET</option>
                 <option value="PUT">PUT</option>
                 <option value="DELETE">DELETE</option>
                 <option value="OPTION">OPTION</option>
@@ -56,25 +61,58 @@ String name, String domain, int port, String method, String path, int loops)
         </div>
 
         <div class="form-group">
-
-            <label for="loops">循环次数</label>
-            <input id="loops" type="number" name="loops" value="1"/>
-        </div>
-
-        <div class="form-group">
-            <label for="scheduler">调度器</label>
-            <input id="scheduler" type="checkbox" name="scheduler"/>
-        </div>
-
-        <div class="form-group">
             <label for="numThreads">线程数</label>
             <input id="numThreads" type="number" name="numThreads" value="1"/>
         </div>
+
+
+
+        <div class="form-group">
+            <label for="scheduler">调度器</label>
+            <input id="scheduler" @click="clickScheduler()" type="checkbox" name="scheduler"/>
+        </div>
+
+        <div class="form-group" v-show="schedulerDisplay">
+            <label for="duration">持续时间(秒)</label>
+            <input id="duration" type="number" name="duration" value="1"/>
+        </div>
+
+        <div class="form-group">
+            <label for="loops">循环次数</label>
+            <input id="loops" type="text" name="loops" value="1" :disabled="schedulerDisplay"/>
+        </div>
+
+
+
+
+        
+        <input type="checkbox" name="postBodyRaw" value="true" hidden checked>
 
         <div class="form-group">
             <button type="submit" class="btn btn-primary" name="submit">生成并下载</button>
         </div>
     </form>
 </div>
+<script src="js/vue.min.js"></script>
+
+<script>
+    var vmm = new Vue({
+        el: '#app',
+        data: {
+            schedulerDisplay: false
+        },
+
+        methods: {
+            clickScheduler: function( params) {
+                this.schedulerDisplay = !this.schedulerDisplay;
+
+                document.getElementById('loops').value = this.schedulerDisplay ? '永远' : 1;
+
+                
+            },
+        }
+
+    })
+</script>
 </body>
 </html>
