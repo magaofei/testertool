@@ -2,8 +2,7 @@
 
 ## Testertool
 
-![](jmeter-jmx.png)
-
+Generating JMX files from Spring boot and downloading
 
 [Demo](testertool.com)
 
