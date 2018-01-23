@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8"/>
-		<title>JMeter File generate</title>
+		<meta charset="UTF-8">
+		<title></title>
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
-		
+
 		<style type="text/css">
 			body{background:rgba(216,216,216,.12);}
 			[v-cloak]{display: none;}
@@ -12,7 +12,7 @@
 			background: -webkit-linear-gradient(right,white,black,white);padding-bottom: 10px;height: 90px;
 			font-size: 23px;color: white;line-height: 90px;
 			text-align: center;}
-			ul li{list-style: none;}  
+			ul li{list-style: none;}
 			.leftul {padding: 0;}
 			.liright{float: right;line-height: 35px;}
 			.twoul{padding: 0;}
@@ -41,55 +41,52 @@
 			JMeter-JMX TestPlan
 		</div>
 		<div style="display: flex;justify-content: space-between;padding: 0 20px;margin-top: 50px;">
-			
+
 			<div style="width: 20%;margin-right: 3%;min-height: 600px;box-shadow: 0 0 20px #bbbaba;">
 			<div style="display: flex;justify-content: space-between;cursor: pointer;border-bottom: 1px solid #dcdcdc;">
-				<h4 style="padding: 10px;">发起测试</h4>  
+				<h4 style="padding: 10px;">发起测试</h4>
 			    <div style="padding:17px 10px 0 0;"></div>
-			</div>	
+			</div>
 				<ul class="leftul">
 					<!--<li><span>添加项目</span></li>-->
 					<li><span>发起线程组测试</span>
 					</li>
 				</ul>
-				<h4 style="padding: 10px;">测试记录</h4>  
+				<h4 style="padding: 10px;">测试记录</h4>
 				<ul class="leftul">
 					<li><span>线程组1测试记录一</span><span class="cred floatright">删除记录</span></li>
 				</ul>
 			</div>
 			<div class="rightt">
-				
+
 				<div style="border-bottom: 2px solid #DCDCDC;">
 					<h3>线程组</h3>
                    <span class="innerright">
-                   	<span>循环次数：</span> <input type="number" class="form-control" style="margin-top: 10px;"/>
-                   </span>
-                   <span class="innerright">
-                   	<span>loops：</span> <input type="number" class="form-control" style="margin-top: 10px;"/>
+                   	<span>loops：</span> <input v-model="jdloops" type="number" class="form-control" style="margin-top: 10px;"/>
                    </span>
                    <span class="innerright" style="margin-right: 0px;width: 12%;">
                    	<span>scheduler：</span> <input type="checkbox"  v-model="isdiaodu"/>
                    </span>
                    <span class="innerright" v-if="isdiaodu">
-                   	<span>duration：</span> <input type="number" class="form-control" style="margin-top: 10px;"/>
-                   </span>                   
-					
+                   	<span>duration：</span> <input type="number" v-model="duration" class="form-control" style="margin-top: 10px;"/>
+                   </span>
+
 				</div>
-				
+
                  <div>
                  	<h3>http协议</h3>
                    <span class="innerright w47">
-                   	<span>name：</span> <input type="text" class="form-control" style="margin-top: 10px;"/>
+                   	<span>name：</span> <input type="text" v-model="jdname" class="form-control" style="margin-top: 10px;"/>
                    </span>
                     <span class="innerright w47">
                    	<span>port：</span> <input type="number" v-model="port"  class="form-control" style="margin-top: 10px;"/>
-                   </span>                                     
-                   <span class="innerright w47">
-                   	<span>domain：</span> <input type="text" placeholder="httpbin.org" class="form-control" style="margin-top: 10px;"/>
                    </span>
                    <span class="innerright w47">
-                   	<span>path：</span> <input type="text" placeholder="/get" class="form-control" style="margin-top: 10px;"/>
-                   </span>                   
+                   	<span>domain：</span> <input type="text" v-model="domain" class="form-control" style="margin-top: 10px;"/>
+                   </span>
+                   <span class="innerright w47">
+                   	<span>path：</span> <input type="text" v-model="path" class="form-control" style="margin-top: 10px;"/>
+                   </span>
                  </div>
                  <div>
                  	<span class="qqstyle">请求方式:</span>
@@ -98,13 +95,13 @@
 				  	 		<option>GET</option>
 				  	 		<option>PUT</option>
 				  	 	</select>
-                 	
+
                  </div>
                  <div style="position: relative;">
                  <div style="margin-left: 70px;margin: 20px 0;" v-for="(item,i) in qqstylearr">
                  	<span class="key">key:</span><input type="text" class="form-control" v-model="item.key" style="display: inline-block;width: 40%;"/>
                  	<span class="key">value:</span><input type="text" v-model="item.value" class="form-control" style="display: inline-block;width: 40%;"/>
-                 	
+
                  </div>
                  <span @click="addqqstyle()" class="glyphicon glyphicon-plus f16 marginleft20 cur" style="position: absolute;top: 6px;right:40px;"></span>
                  </div>
@@ -115,19 +112,18 @@
 				<!--<div style="font-size: 23px;text-align: center;line-height: 300px;">
 					在这里你可以发起测试请求
 				</div>-->
-				
+
 			</div>
 		</div>
-	</div>		
-		
-		
+	</div>
+
+
 	</body>
 </html>
-
 <script type="text/javascript" src="js/vue.js" ></script>
 <script type="text/javascript" src="js/axios.js" ></script>
 <script>
-	
+
 	new Vue({
 		el:"#container",
 		data:{
@@ -135,44 +131,66 @@
 			    {"key":"","value":""}
 			],
 			isdiaodu:false,
-			xhcishu:"",
-			loops:"",
-			name:"",
+			jdloops:"",
+			duration:"",
+			jdname:"",
 			domain:"",
 			path:"",
 			port:80,
 			askstyle:"POST"
-			
-			
+
+
 		},
 		methods:{
-			
+
 			gotest:function(){
 
-			     var bbr=[];
-			     this.qqstylearr.forEach((value,i)=>{
-			     	bbr.push({"key":value.key,"value":value.value});
-			     	
-			     })
-			      bbr=JSON.stringify(bbr);
-			     var aurl="/download?numThreads=1";
-			    axios.post(aurl).then((response)=>{
-			  	
+                  var str="";
+
+			      	var aurl="/download"
+			      	this.qqstylearr.forEach((palue,i)=>{
+
+			      		if(i==this.qqstylearr.length-1){
+			      			str+=palue.key+"="+palue.value;
+			      		}else{
+			      			str+=palue.key+"="+palue.value+"&";
+			      		}
+
+			      	});
+
+				axios({
+                    url: aurl,
+                    method: 'post',
+                    data: {
+                        name:this.jdname,
+                        domain:this.domain,
+                        path:this.path,
+                        methods:this.askstyle,
+                        loops:this.jdloops,
+                        scheduler:this.isdiaodu,
+                        duration:this.duration,
+                        numThreads:1,
+                        postBodyRaw:true,
+                        value:str
+                    },
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                })
+
+			     .then((response)=>{
+
 			  	   console.log(response)
-			  	   this.bannertwoarr=response.data.data;
-			  
-			  	
+
 			    });
-			      
-			   
-			   
+
 			},
-			
+
 			addqqstyle:function(){
 				this.qqstylearr.push({"key":"","value":""})
-				
+
 			}
 		}
 	})
-	
+
 </script>
