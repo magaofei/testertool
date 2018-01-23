@@ -34,6 +34,8 @@ After=syslog.target
 [Service]
 ExecStart=/usr/bin/java -jar /data/testertool/target/testertool.jar
 SuccessExitStatus=143
+Restart=always
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
